@@ -16,7 +16,12 @@ val quarkusPlatformVersion: String by project
 dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
     implementation("io.quarkiverse.qute.web:quarkus-qute-web")
+    // For DB
+    implementation("io.quarkus:quarkus-hibernate-orm")
+    implementation("io.quarkus:quarkus-hibernate-orm-panache-kotlin")
     implementation("io.quarkus:quarkus-hibernate-validator")
+    implementation("io.quarkiverse.jdbc:quarkus-jdbc-sqlite:3.0.7")
+
     implementation("io.quarkus:quarkus-resteasy-reactive")
     implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
     implementation("io.quarkus:quarkus-arc")
