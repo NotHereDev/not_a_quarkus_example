@@ -3,16 +3,11 @@ package fr.not_here_dev.controllers
 import fr.not_here_dev.entities.User
 import jakarta.transaction.Transactional
 import jakarta.validation.Valid
-import jakarta.ws.rs.DELETE
-import jakarta.ws.rs.GET
-import jakarta.ws.rs.PATCH
-import jakarta.ws.rs.POST
-import jakarta.ws.rs.Path
+import jakarta.ws.rs.*
 import jakarta.ws.rs.core.Response
 
 @Path("/users")
 class UserResource {
-
     @GET
     fun index() = User.listAll()
 
@@ -36,12 +31,17 @@ class UserResource {
 
     @Path("/{id}")
     @PATCH
-    @Transactional
-    fun update(id: Long, @Valid newUser: User): User {
+    fun update(id: Long, newUser: User): Response {
         val user = User.findById(id)!!
         user.login = newUser.login
-        user.persistAndFlush()
-        return user
+        if(!user.valid){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(user.violationMap)
+                    .build()
+        }
+        user.persist()
+        return Response.ok().entity(user).build()
     }
 
     @Path("/{id}")

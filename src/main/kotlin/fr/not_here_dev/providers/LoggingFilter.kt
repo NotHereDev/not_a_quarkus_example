@@ -25,6 +25,6 @@ internal class LoggingFilter : ContainerRequestFilter, ContainerResponseFilter {
     override fun filter(requestContext: ContainerRequestContext,
                         responseContext: ContainerResponseContext) {
         val requestDur = System.nanoTime() - requestContext.getProperty("requestStartTime") as Long
-        Log.info("Rendered [${responseContext.status}] response in ${requestDur / 1000000}ms")
+        Log.info("Rendered [${responseContext.status}] response in ${requestDur / 1000000}ms, result: ${responseContext.entity}")
     }
 }
