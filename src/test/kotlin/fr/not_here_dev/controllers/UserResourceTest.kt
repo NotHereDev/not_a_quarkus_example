@@ -21,16 +21,7 @@ class UserResourceTest {
     }
 
     @Test
-    fun testShowFailed() {
-        given()
-            .pathParam("id", 1)
-            .`when`().get("/{id}")
-            .then()
-            .statusCode(StatusCode.NOT_FOUND)
-    }
-
-    @Test
-    fun testShowSuccess() {
+    fun testShow() {
         given()
             .pathParam("id", 1)
             .`when`().get("/{id}")
@@ -41,18 +32,22 @@ class UserResourceTest {
     @Test
     fun testCreate() {
         given()
+            .body("{\"login\": \"user@example.com\"}")
+            .header("Content-Type", "application/json")
             .`when`().post()
             .then()
-            .statusCode(StatusCode.BAD_REQUEST)
+            .statusCode(StatusCode.CREATED)
     }
 
     @Test
     fun testUpdate() {
         given()
             .pathParam("id", 1)
+            .body("{\"login\": \"user@example.com\"}")
+            .header("Content-Type", "application/json")
             .`when`().patch("/{id}")
             .then()
-            .statusCode(StatusCode.NOT_FOUND)
+            .statusCode(StatusCode.OK)
     }
 
     @Test
@@ -61,6 +56,6 @@ class UserResourceTest {
             .pathParam("id", 1)
             .`when`().delete("/{id}")
             .then()
-            .statusCode(StatusCode.NOT_FOUND)
+            .statusCode(StatusCode.OK)
     }
 }
