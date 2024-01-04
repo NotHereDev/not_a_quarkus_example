@@ -24,7 +24,8 @@ class UserResource {
 
     @POST
     @Transactional
-    fun create(@Valid newUser: User): User {
+    fun create(newUser: User): User {
+        newUser.validate(true)
         newUser.persistAndFlush()
         return newUser
     }
@@ -34,12 +35,7 @@ class UserResource {
     fun update(id: Long, newUser: User): Response {
         val user = User.findById(id)!!
         user.login = newUser.login
-        if(!user.valid){
-            return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(user.violationMap)
-                    .build()
-        }
+        user.validate(true)
         user.persist()
         return Response.ok().entity(user).build()
     }

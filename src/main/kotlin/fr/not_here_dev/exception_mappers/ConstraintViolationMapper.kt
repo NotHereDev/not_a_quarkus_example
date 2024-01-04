@@ -7,7 +7,7 @@ import org.jboss.resteasy.reactive.server.ServerExceptionMapper
 class ConstraintViolationMapper {
     @ServerExceptionMapper
     fun mapConstraintViolation(exception: ConstraintViolationException) = status(Status.BAD_REQUEST)
-            .entity(exception.constraintViolations)
+            .entity(exception.constraintViolations.map { it.propertyPath.toString() to it.message }.toMap())
             .build()
 
 }

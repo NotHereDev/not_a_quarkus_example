@@ -5,6 +5,7 @@ package fr.not_here_dev.utils
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
 import jakarta.validation.ConstraintViolation
+import jakarta.validation.ConstraintViolationException
 import jakarta.validation.Validation
 import jakarta.validation.Validator
 
@@ -20,8 +21,11 @@ open class ValidatableEntity: PanacheEntity() {
     val valid
         get() = violations.isEmpty()
 
-    fun validate(): Set<ConstraintViolation<Any>> {
+    fun validate(trowIfInvalid: Boolean = false): Set<ConstraintViolation<Any>> {
         constraintViolations = validator.validate(this)
+        if (trowIfInvalid && !valid) {
+            throw ConstraintViolationException(constraintViolations)
+        }
         return constraintViolations!!
     }
 
