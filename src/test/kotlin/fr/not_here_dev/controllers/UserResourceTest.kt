@@ -5,6 +5,7 @@ import io.quarkus.test.junit.QuarkusTest
 import io.restassured.RestAssured.given
 import org.junit.jupiter.api.Test
 import org.hamcrest.CoreMatchers.`is`
+import org.jboss.resteasy.reactive.RestResponse.StatusCode
 
 
 @QuarkusTest
@@ -15,16 +16,26 @@ class UserResourceTest {
         given()
             .`when`().get()
             .then()
-            .statusCode(200)
+            .statusCode(StatusCode.OK)
             .body(`is`("[]"))
     }
 
     @Test
-    fun testShow() {
+    fun testShowFailed() {
         given()
-            .`when`().get("/{id}", 1)
+            .pathParam("id", 1)
+            .`when`().get("/{id}")
             .then()
-            .statusCode(404)
+            .statusCode(StatusCode.NOT_FOUND)
+    }
+
+    @Test
+    fun testShowSuccess() {
+        given()
+            .pathParam("id", 1)
+            .`when`().get("/{id}")
+            .then()
+            .statusCode(StatusCode.OK)
     }
 
     @Test
@@ -32,22 +43,24 @@ class UserResourceTest {
         given()
             .`when`().post()
             .then()
-            .statusCode(400)
+            .statusCode(StatusCode.BAD_REQUEST)
     }
 
     @Test
     fun testUpdate() {
         given()
-            .`when`().patch("/{id}", 1)
+            .pathParam("id", 1)
+            .`when`().patch("/{id}")
             .then()
-            .statusCode(404)
+            .statusCode(StatusCode.NOT_FOUND)
     }
 
     @Test
     fun testDestroy() {
         given()
-            .`when`().delete("/{id}", 1)
+            .pathParam("id", 1)
+            .`when`().delete("/{id}")
             .then()
-            .statusCode(404)
+            .statusCode(StatusCode.NOT_FOUND)
     }
 }
