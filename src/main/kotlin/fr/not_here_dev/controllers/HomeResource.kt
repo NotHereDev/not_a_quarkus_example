@@ -4,7 +4,7 @@ import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
 
 @Path("/home")
-class HomeController {
+class HomeResource {
     @GET
     fun get() = "Wesh alors"
 }

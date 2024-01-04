@@ -11,14 +11,21 @@ import jakarta.ws.rs.Path
 import jakarta.ws.rs.core.Response
 
 @Path("/users")
-class UsersController {
+class UserResource {
 
     @GET
     fun index() = User.listAll()
 
     @Path("{id}")
     @GET
-    fun show(id: Long) = User.findById(id)
+    fun show(id: Long) {
+        val user = User.findById(id)
+        if (user == null) {
+            Response.status(Response.Status.NOT_FOUND).build()
+        } else {
+            Response.ok().entity(user).build()
+        }
+    }
 
     @POST
     @Transactional

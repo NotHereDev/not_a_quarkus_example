@@ -6,7 +6,7 @@ import jakarta.ws.rs.core.Response
 
 
 @Path("/")
-class RootController{
+class RootResource{
     @GET
     fun get() = Response
             .status(Response.Status.MOVED_PERMANENTLY)
