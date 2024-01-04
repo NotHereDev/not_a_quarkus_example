@@ -6,8 +6,10 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotEmpty
+import org.eclipse.microprofile.openapi.annotations.media.Schema
 
 @Entity
+@Schema(name = "User", description = "A user of the application")
 class User : ValidatableEntity() {
     companion object : PanacheCompanion<User>
 
