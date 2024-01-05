@@ -24,11 +24,16 @@ dependencies {
 
     implementation("io.quarkus:quarkus-resteasy-reactive")
     implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
+    implementation("io.quarkus:quarkus-resteasy-reactive-qute")
     implementation("io.quarkus:quarkus-arc")
     implementation("io.quarkus:quarkus-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("io.quarkus:quarkus-smallrye-openapi")
+
+    implementation("org.graalvm.sdk:graal-sdk:23.1.1")
+    implementation("org.graalvm.js:js-scriptengine:23.1.1")
+    runtimeOnly("org.graalvm.js:js:23.1.1")
 
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
