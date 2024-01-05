@@ -8,16 +8,22 @@ import jakarta.validation.ConstraintViolation
 import jakarta.validation.ConstraintViolationException
 import jakarta.validation.Validation
 import jakarta.validation.Validator
+import org.eclipse.microprofile.openapi.annotations.media.Schema
 
 @JsonIgnoreProperties(value = ["valid", "violations", "violationMessages", "violationMap"])
 open class ValidatableEntity: PanacheEntity() {
+    @Schema(hidden = true)
     private var constraintViolations: Set<ConstraintViolation<Any>>? = null
+
+    @get:Schema(hidden = true)
     val violations
         get() = constraintViolations ?: validate()
 
+    @get:Schema(hidden = true)
     private val validator: Validator
         get() = Validation.buildDefaultValidatorFactory().validator
 
+    @get:Schema(hidden = true)
     val valid
         get() = violations.isEmpty()
 
@@ -29,9 +35,11 @@ open class ValidatableEntity: PanacheEntity() {
         return constraintViolations!!
     }
 
+    @get:Schema(hidden = true)
     val violationMessages
         get() = violations.map { it.message }
 
+    @get:Schema(hidden = true)
     val violationMap
         get() = violations.map { it.propertyPath.toString() to it.message }.toMap()
 }
