@@ -1,8 +1,10 @@
-package fr.not_here_dev.controllers
+package fr.not_here_dev.controllers.api
 
+import fr.not_here_dev.entities.User
 import io.quarkus.test.common.http.TestHTTPEndpoint
 import io.quarkus.test.junit.QuarkusTest
 import io.restassured.RestAssured.given
+import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Test
 import org.hamcrest.CoreMatchers.`is`
 import org.jboss.resteasy.reactive.RestResponse.StatusCode
@@ -21,9 +23,15 @@ class UserResourceTest {
     }
 
     @Test
+    @Transactional
     fun testShow() {
+        val user = User().apply {
+            login = "user@example.com"
+        }
+        user.persistAndFlush()
+
         given()
-            .pathParam("id", 1)
+            .pathParam("id", user.id)
             .`when`().get("/{id}")
             .then()
             .statusCode(StatusCode.OK)
@@ -31,8 +39,12 @@ class UserResourceTest {
 
     @Test
     fun testCreate() {
+        val user = User().apply {
+            login = "user@example.com"
+        }
+
         given()
-            .body("{\"login\": \"user@example.com\"}")
+            .body(user)
             .header("Content-Type", "application/json")
             .`when`().post()
             .then()

@@ -1,20 +1,20 @@
-package fr.not_here_dev.controllers
+package fr.not_here_dev.controllers.api
 
 import fr.not_here_dev.entities.User
 import jakarta.transaction.Transactional
 import jakarta.ws.rs.*
 import jakarta.ws.rs.core.Response
 
-@Path("/users")
+@Path("/api/users")
 class UserResource {
     @GET
     fun index() = User.listAll()
 
     @Path("{id}")
     @GET
-    fun show(id: Long) {
+    fun show(id: Long): Response {
         val user = User.findById(id)
-        if (user == null) {
+        return if (user == null) {
             Response.status(Response.Status.NOT_FOUND).build()
         } else {
             Response.ok().entity(user).build()
