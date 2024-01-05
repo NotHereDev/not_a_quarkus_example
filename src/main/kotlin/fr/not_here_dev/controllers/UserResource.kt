@@ -2,7 +2,6 @@ package fr.not_here_dev.controllers
 
 import fr.not_here_dev.entities.User
 import jakarta.transaction.Transactional
-import jakarta.validation.Valid
 import jakarta.ws.rs.*
 import jakarta.ws.rs.core.Response
 
