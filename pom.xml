@@ -19,6 +19,8 @@
     <graalvm.version>21.0.0</graalvm.version>
     <lombok.version>1.18.10</lombok.version>
     <thymeleaf.version>3.1.1.RELEASE</thymeleaf.version>
+    <frontend-maven-plugin.version>1.15.0</frontend-maven-plugin.version>
+    <bun.version>v1.0.21</bun.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -234,7 +236,7 @@
       <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
-        <version>1.15.0</version>
+        <version>${frontend-maven-plugin.version}</version>
 
         <executions>
           <execution>
@@ -243,7 +245,7 @@
               <goal>install-bun</goal>
             </goals>
             <configuration>
-              <bunVersion>v1.0.21</bunVersion>
+              <bunVersion>${bun.version}</bunVersion>
             </configuration>
           </execution>
           <execution>
@@ -251,15 +253,6 @@
             <goals>
               <goal>bun</goal>
             </goals>
-          </execution>
-          <execution>
-            <id>bun run build</id>
-            <goals>
-              <goal>bun</goal>
-            </goals>
-            <configuration>
-              <arguments>run build</arguments>
-            </configuration>
           </execution>
         </executions>
         <configuration>
