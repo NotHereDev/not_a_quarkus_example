@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "ESNext",
+      "dom"
+    ],
+    "module": "commonJS",
+    "target": "esnext",
+    "moduleDetection": "force",
+    "composite": true,
+    "strict": true,
+    "downlevelIteration": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "types": [
+      "bun-types", // add Bun global
+      "webpack-env"
+    ]
+  }
+}
