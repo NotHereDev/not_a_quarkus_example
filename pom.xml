@@ -231,6 +231,38 @@
           </pluginOptions>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>1.15.0</version>
+
+        <executions>
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>webpack build</id>
+            <goals>
+              <goal>webpack</goal>
+            </goals>
+            <configuration>
+              <arguments>-p</arguments>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <nodeVersion>v20.10.0</nodeVersion>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <profiles>
