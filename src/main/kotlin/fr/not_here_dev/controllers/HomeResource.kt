@@ -1,19 +1,18 @@
 package fr.not_here_dev.controllers
 
-import io.quarkus.qute.CheckedTemplate
-import io.quarkus.qute.TemplateInstance
+import fr.not_here_dev.Rendering
+import jakarta.ws.rs.Produces
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
+import jakarta.ws.rs.core.MediaType
 
 
 @Path("/home")
-class HomeResource {
-    @CheckedTemplate
-    object Templates {
-        @JvmStatic
-        external fun home(title: String): TemplateInstance
-    }
+@Produces(MediaType.TEXT_HTML)
+class HomeResource(val render: Rendering) {
 
     @GET
-    fun get() = Templates.home("Hello page")
+    fun get() = render
+        .view("home")
+        .with("title" to "Home")
 }

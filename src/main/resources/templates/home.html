@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Title</title>
+    <script src="static/client.js"></script>
+    [(${ssr.hydrationScript()})]
+</head>
+<body>
+    test
+    [(${ssr.reactiveComponent("HelloWorld")})]
+</body>
+</html>

@@ -7,7 +7,6 @@ import io.restassured.RestAssured.given
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Test
 import org.hamcrest.CoreMatchers.`is`
-import org.jboss.resteasy.reactive.RestResponse.StatusCode
 
 
 @QuarkusTest
@@ -18,7 +17,7 @@ class UserResourceTest {
         given()
             .`when`().get()
             .then()
-            .statusCode(StatusCode.OK)
+            .statusCode(200)
             .body(`is`("[]"))
     }
 
@@ -34,7 +33,7 @@ class UserResourceTest {
             .pathParam("id", user.id)
             .`when`().get("/{id}")
             .then()
-            .statusCode(StatusCode.OK)
+            .statusCode(200)
     }
 
     @Test
@@ -48,7 +47,7 @@ class UserResourceTest {
             .header("Content-Type", "application/json")
             .`when`().post()
             .then()
-            .statusCode(StatusCode.CREATED)
+            .statusCode(201)
     }
 
     @Test
@@ -59,7 +58,7 @@ class UserResourceTest {
             .header("Content-Type", "application/json")
             .`when`().patch("/{id}")
             .then()
-            .statusCode(StatusCode.OK)
+            .statusCode(200)
     }
 
     @Test
@@ -68,6 +67,6 @@ class UserResourceTest {
             .pathParam("id", 1)
             .`when`().delete("/{id}")
             .then()
-            .statusCode(StatusCode.OK)
+            .statusCode(200)
     }
 }
