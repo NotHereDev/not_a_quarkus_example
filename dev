@@ -1,0 +1,10 @@
+#!/bin/bash
+
+SIDE=server webpack &
+P1=$!
+SIDE=client webpack serve &
+P2=$!
+./mvnw quarkus:dev -Dquarkus.console.enabled='false' &
+P3=$!
+
+wait $P1 $P2 $P3

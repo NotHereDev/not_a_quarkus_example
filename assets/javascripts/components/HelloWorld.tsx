@@ -6,7 +6,7 @@ export default function HelloWorld({name}: {name: string}) {
     return <>
         <div>Hello {name}</div>
         <button onClick={() => setCount(count() + 1)}>
-            Count: {count()} heyo
+            Count: {count()} heeeeeeee
         </button>
     </>;
 }

@@ -233,32 +233,6 @@
           </pluginOptions>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>com.github.eirslett</groupId>
-        <artifactId>frontend-maven-plugin</artifactId>
-        <version>${frontend-maven-plugin.version}</version>
-
-        <executions>
-          <execution>
-            <id>install bun runtime</id>
-            <goals>
-              <goal>install-bun</goal>
-            </goals>
-            <configuration>
-              <bunVersion>${bun.version}</bunVersion>
-            </configuration>
-          </execution>
-          <execution>
-            <id>bun install</id>
-            <goals>
-              <goal>bun</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <installDirectory>target</installDirectory>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   <profiles>
