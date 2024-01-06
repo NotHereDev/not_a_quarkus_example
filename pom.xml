@@ -238,29 +238,32 @@
 
         <executions>
           <execution>
-            <id>install node and npm</id>
+            <id>install bun runtime</id>
             <goals>
-              <goal>install-node-and-npm</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>npm install</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>webpack build</id>
-            <goals>
-              <goal>webpack</goal>
+              <goal>install-bun</goal>
             </goals>
             <configuration>
-              <arguments>-p</arguments>
+              <bunVersion>v1.0.10</bunVersion>
+            </configuration>
+          </execution>
+          <execution>
+            <id>bun install</id>
+            <goals>
+              <goal>bun</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>bun run build</id>
+            <goals>
+              <goal>bun</goal>
+            </goals>
+            <configuration>
+              <arguments>run build</arguments>
             </configuration>
           </execution>
         </executions>
         <configuration>
-          <nodeVersion>v20.10.0</nodeVersion>
+          <installDirectory>target</installDirectory>
         </configuration>
       </plugin>
     </plugins>
