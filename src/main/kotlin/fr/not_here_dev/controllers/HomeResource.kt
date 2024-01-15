@@ -11,6 +11,8 @@ import jakarta.ws.rs.core.MediaType
 @Produces(MediaType.TEXT_HTML)
 class HomeResource(val render: Rendering) {
 
+//    @GET
+//    fun get() = "Chansey"
     @GET
     fun get() = render
         .view("home")
