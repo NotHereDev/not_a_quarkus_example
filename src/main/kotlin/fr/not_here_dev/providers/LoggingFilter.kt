@@ -33,7 +33,7 @@ internal class LoggingFilter : ContainerRequestFilter, ContainerResponseFilter {
 
     override fun filter(requestContext: ContainerRequestContext,
                         responseContext: ContainerResponseContext) {
-        if(!(requestContext.getProperty("request_log_time") as Boolean)) return
+        if(requestContext.getProperty("request_log_time") != true) return
         val requestStartTime = requestContext.getProperty("request_start_time") as Long?
         val requestDur = if (requestStartTime != null) System.nanoTime() - requestStartTime else null
         Log.info("Rendered [${responseContext.status}] response in ${if (requestDur != null) (requestDur / 10_000).toFloat() / 100 else "?"}ms to '${requestContext.uriInfo.absolutePath}', result: ${responseContext.entity?.javaClass?.name ?: "null"}")
