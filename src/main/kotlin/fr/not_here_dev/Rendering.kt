@@ -1,6 +1,8 @@
 package fr.not_here_dev
 
 import fr.not_here_dev.helpers.SSR
+import fr.not_here_dev.providers.LoggingFilter.Companion.NO_LOGS_REGEX
+import io.quarkus.runtime.LaunchMode
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.enterprise.inject.Produces
 import jakarta.servlet.ServletException
@@ -62,12 +64,22 @@ class Rendering {
 
         @Throws(IOException::class, ServletException::class, WebApplicationException::class)
         override fun render(request: HttpServletRequest, response: HttpServletResponse) {
+            val logRenderTime = LaunchMode.current() == LaunchMode.DEVELOPMENT &&
+                request.queryString?.let { NO_LOGS_REGEX.containsMatchIn(it) } != true
+
+            SSR.instance.logRenderTime = logRenderTime
             val context = Context(request.locale, variables)
 
-            response.outputStream.use { outputStream ->
-                OutputStreamWriter(outputStream, StandardCharsets.UTF_8).use { writer ->
-                    templateEngine.process(path, context, writer)
-                }
+            //return response.outputStream.writer.write(templateEngine.process(path, context))
+
+            OutputStreamWriter(response.outputStream, StandardCharsets.UTF_8).use {
+                if(logRenderTime) {
+                    val start = System.nanoTime()
+                    it.write(templateEngine.process(path, context))
+                    val time = System.nanoTime() - start
+
+                    io.quarkus.logging.Log.info("Rendered '${path}' template in ${(time / 10_000).toFloat() / 100}ms")
+                } else templateEngine.process(path, context, it)
             }
         }
     }
